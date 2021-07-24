@@ -10,7 +10,7 @@ class ClimbsController < ApplicationController
         render json: climb
     end
 
-    def create
+    
 
     private
 
