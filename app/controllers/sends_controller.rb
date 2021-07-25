@@ -5,4 +5,4 @@ class SendsController < ApplicationController
         render json: sends
     end
 
-end
+e                               
