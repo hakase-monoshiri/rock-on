@@ -1,7 +1,7 @@
  Rails.application.routes.draw do
 
   resources :climbs
-
+      
   resources :climbs, only: [:show] do
     resources :sends
   end
