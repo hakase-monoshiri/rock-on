@@ -11,4 +11,10 @@ class SendsController < ApplicationController
         render json: send
     end
 
+    private
+
+    def send_params
+        params.require(:send).permit(:climber, :date, :notes, :climb_id)
+    end 
+
 end
