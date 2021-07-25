@@ -5,4 +5,10 @@ class SendsController < ApplicationController
         render json: sends
     end
 
-e                               
+    def show
+        climb = Climb.find_by(id: params[:climb_id])
+        send = climb.sends.find_by(id: params[:id])
+        render json: send
+    end
+
+end
