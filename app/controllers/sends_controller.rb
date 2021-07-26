@@ -11,6 +11,7 @@ class SendsController < ApplicationController
         render json: send
     end
 
+    
     private
 
     def send_params
