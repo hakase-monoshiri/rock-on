@@ -6,6 +6,8 @@ console.log(climbsContainer);
 const sendsContainer = document.querySelector(".sends-container");
 console.log(sendsContainer);
 
+const climbSelector = document.getElementById("climb-selector")
+
 // Class Declarations
 
 class Climb {
@@ -31,6 +33,13 @@ class Climb {
 
     get addToClimbsContainer () {
         climbsContainer.innerHTML += this._htmlTemplate
+    }
+
+    get addToClimbSelector () {
+       const climbOption = document.createElement('option');
+       climbOption.innerText = `${this. nickname}, ${this.color}: ${this.grade}`;
+       console.log(climbOption)
+       climbSelector.appendChild(climbOption);
     }
 }
 
@@ -81,8 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log(climbsArray);
                 for ( const climbJSONObj of climbsArray) {
                     myClimb = new Climb(climbJSONObj)
-                    console.log(myClimb);
-                    myClimb.addToClimbsContainer;
+                    myClimb.addToClimbSelector ;
                 }
             }
         );
