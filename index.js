@@ -98,28 +98,18 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         );
 
-    
-    fetch(`${baseUrl}/1/sends`).then( function(res) {
-        return res.json();}).then(
-            function(sendsArray) {
-                console.log(sendsArray);
-                for ( const sendJSONObj of sendsArray) {
-                    mySend = new Send(sendJSONObj)
-                    console.log(mySend);
-                    mySend.addToSendsContainer;
-                }
-            }
-        );
-
 
         climbSelectionButton.addEventListener("click", function(event) {
             event.preventDefault();
+            event.stopPropagation();
 
             console.log(event);
 
             console.log(climbSelector.selectedIndex)
 
-            fetch(`${baseUrl}/${climbSelector.selectedIndex + 1}`).then( function(res) {
+            let climbId = climbSelector.selectedIndex + 1
+
+            fetch(`${baseUrl}/${climbId}`).then( function(res) {
                 return res.json();}).then(
                     function(climbJSONObj) {
                         console.log(climbJSONObj);
@@ -128,6 +118,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 );
 
-
+            fetch(`${baseUrl}/${climbId}/sends`).then( function(res) {
+                return res.json();}).then(
+                    function(sendsArray) {
+                        console.log(sendsArray);
+                        for ( const sendJSONObj of sendsArray) {
+                            mySend = new Send(sendJSONObj)
+                            console.log(mySend);
+                            mySend.addToSendsContainer;
+                        }
+                    }
+                );
         })
 })
