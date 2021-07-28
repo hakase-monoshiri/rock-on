@@ -2,6 +2,8 @@ console.log("test");
 
 const climbsContainer = document.querySelector(".climbs-container");
 
+const sendsContainer = document.querySelector(".sends-container");
+
 console.log(climbsContainer);
 
 class Climb {
@@ -30,15 +32,34 @@ class Climb {
     }
 }
 
+class Send {
+
+    constructor (sendJSONObj) {
+        this.climber = sendJSONObj.climber;
+        this.date = sendJSONObj.date;
+        this.notes = sendJSONObj.notes;
+    }
+    
+    get _htmlTemplate() {
+        return ` <h3> ${this.climber} </h3>
+        <h5> Completed on: ${this.date} </h5>
+        <p> ${this.notes} </p>
+        `
+
+    };
+
+    get addToSendsContainer () {
+        sendsContainer.innerHTML += this._htmlTemplate
+    }
+}
 
 const baseUrl = "http://127.0.0.1:3000/climbs"
 
 // fetch(`${baseUrl}/1`).then( function(res) {
 //     return res.json();}).then(
-//         function(climb) {
+//         function(climbJSONobj) {
 //             console.log(climb);
-//             const { climb_type, grade, location, notes, color , nickname} = climb;
-//             const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
+//             myClimb = new Climb(climbJSONObj)
 //             console.log(myClimb);
 //             climbsContainer.innerHTML += myClimb.htmlTemplate;
 //         }
@@ -49,11 +70,22 @@ fetch(`${baseUrl}`).then( function(res) {
         function(climbsArray) {
             console.log(climbsArray);
             for ( const climbJSONObj of climbsArray) {
-                // const { climb_type, grade, location, notes, color , nickname} = climb;
-                // const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
                 myClimb = new Climb(climbJSONObj)
                 console.log(myClimb);
                 myClimb.addToClimbsContainer;
+            }
+        }
+    );
+
+    
+fetch(`${baseUrl}/1/sends`).then( function(res) {
+    return res.json();}).then(
+        function(sendsArray) {
+            console.log(sendsArray);
+            for ( const sendJSONObj of sendsArray) {
+                mySend = new Send(sendJSONObj)
+                console.log(mySend);
+                mySend.addToSendsContainer;
             }
         }
     );
