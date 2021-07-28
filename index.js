@@ -6,7 +6,8 @@ console.log(climbsContainer);
 
 class Climb {
 
-    constructor (climb_type, grade, location, notes, color) {
+    constructor (climb_type, grade, location, notes, color, nickname) {
+        this.nickname = nickname;
         this.climb_type = climb_type;
         this.grade = grade;
         this.location = location;
@@ -24,15 +25,16 @@ class Climb {
 
     };
 
-    
+
 
 }
 
 fetch("http://127.0.0.1:3000/climbs/1").then( function(res) {
     return res.json();}).then(
         function(climb) {
-            const { climb_type, grade, location, notes, color } = climb;
-            const myClimb = new Climb(climb_type, grade, location, notes, color);
+            console.log(climb);
+            const { climb_type, grade, location, notes, color , nickname} = climb;
+            const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
             console.log(myClimb);
             climbsContainer.innerHTML += myClimb.htmlTemplate;
         }

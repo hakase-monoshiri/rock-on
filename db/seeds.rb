@@ -6,11 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Climb.create( climb_type: "Boulder", grade:"V2", color:"Pink",  location: "PRG East Falls, Cube Face ", notes:"Starts at the arete and continues to the top of the middle of the wall")
-Climb.create( climb_type: "Boulder", grade:"V1", color:"Blue",  location: "PRG East Falls, Shipwreck Starbord ", notes:"Lots of sloper holds. Keep hips low to keep from slipping off")
-Climb.create( climb_type: "Boulder", grade:"V3", color:"Green",  location: "PRG East Falls, Mushroom Front ", notes:"Start is very crunched up, with a huge mantle move to finish it out. Watch for the heel hook")
-Climb.create( climb_type: "Lead", grade:"5.9", color:"Purple",  location: "PRG East Falls, Route 12 ", notes:"Really short, but small crimps the whole way.")
-Climb.create( climb_type: "Top-Rope", grade:"5.4", color:"Red",  location: "PRG East Falls, Route 6 ", notes:"Easily the easiest climb in the gym")
+Climb.create( nickname: "Pink Slab", climb_type: "Boulder", grade:"V2", color:"Pink",  location: "PRG East Falls, Cube Face ", notes:"Starts at the arete and continues to the top of the middle of the wall")
+Climb.create( nickname: "Blue Overhang", climb_type: "Boulder", grade:"V1", color:"Blue",  location: "PRG East Falls, Shipwreck Starbord ", notes:"Lots of sloper holds. Keep hips low to keep from slipping off")
+Climb.create( nickname: "The Destroyer", climb_type: "Boulder", grade:"V3", color:"Green",  location: "PRG East Falls, Mushroom Front ", notes:"Start is very crunched up, with a huge mantle move to finish it out. Watch for the heel hook")
+Climb.create( nickname: "Try Your Best", climb_type: "Lead", grade:"5.9", color:"Purple",  location: "PRG East Falls, Route 12 ", notes:"Really short, but small crimps the whole way.")
+Climb.create(  nickname: "Cakewalk", climb_type: "Top-Rope", grade:"5.4", color:"Red",  location: "PRG East Falls, Route 6 ", notes:"Easily the easiest climb in the gym")
 
 
 
