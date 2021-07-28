@@ -29,13 +29,29 @@ class Climb {
 
 }
 
-fetch("http://127.0.0.1:3000/climbs/1").then( function(res) {
+
+const baseUrl = "http://127.0.0.1:3000/climbs"
+
+// fetch(`${baseUrl}/1`).then( function(res) {
+//     return res.json();}).then(
+//         function(climb) {
+//             console.log(climb);
+//             const { climb_type, grade, location, notes, color , nickname} = climb;
+//             const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
+//             console.log(myClimb);
+//             climbsContainer.innerHTML += myClimb.htmlTemplate;
+//         }
+//     );
+
+fetch(`${baseUrl}`).then( function(res) {
     return res.json();}).then(
-        function(climb) {
-            console.log(climb);
-            const { climb_type, grade, location, notes, color , nickname} = climb;
-            const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
-            console.log(myClimb);
-            climbsContainer.innerHTML += myClimb.htmlTemplate;
-        }
+        function(climbs) {
+            console.log(climbs);
+            climbs.map(climb => {
+                const { climb_type, grade, location, notes, color , nickname} = climb;
+                const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
+                console.log(myClimb);
+                climbsContainer.innerHTML += myClimb.htmlTemplate;
+            }
+        )}
     );
