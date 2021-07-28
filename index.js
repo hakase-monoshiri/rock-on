@@ -15,7 +15,7 @@ class Climb {
         this.color = color;
     }
     
-    get htmlTemplate() {
+    get _htmlTemplate() {
         return ` <h3> ${this.nickname} </h3>
         <h5> ${this.color}: ${this.grade} </h5>
         <h5> ${this.climb_type} </h5>
@@ -25,8 +25,9 @@ class Climb {
 
     };
 
-
-
+    get addToClimbsContainer () {
+        climbsContainer.innerHTML += this._htmlTemplate
+    }
 }
 
 
@@ -51,7 +52,7 @@ fetch(`${baseUrl}`).then( function(res) {
                 const { climb_type, grade, location, notes, color , nickname} = climb;
                 const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
                 console.log(myClimb);
-                climbsContainer.innerHTML += myClimb.htmlTemplate;
+                myClimb.addToClimbsContainer;
             }
         }
     );
