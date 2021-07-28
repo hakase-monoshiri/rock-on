@@ -1,10 +1,12 @@
-console.log("test");
+// Global variables and functions
 
 const climbsContainer = document.querySelector(".climbs-container");
+console.log(climbsContainer);
 
 const sendsContainer = document.querySelector(".sends-container");
+console.log(sendsContainer);
 
-console.log(climbsContainer);
+// Class Declarations
 
 class Climb {
 
@@ -53,39 +55,50 @@ class Send {
     }
 }
 
-const baseUrl = "http://127.0.0.1:3000/climbs"
+// Stuff that actually runs the web app front-end 
 
-// fetch(`${baseUrl}/1`).then( function(res) {
-//     return res.json();}).then(
-//         function(climbJSONobj) {
-//             console.log(climb);
-//             myClimb = new Climb(climbJSONObj)
-//             console.log(myClimb);
-//             climbsContainer.innerHTML += myClimb.htmlTemplate;
-//         }
-//     );
+document.addEventListener("DOMContentLoaded", function() {
 
-fetch(`${baseUrl}`).then( function(res) {
-    return res.json();}).then(
-        function(climbsArray) {
-            console.log(climbsArray);
-            for ( const climbJSONObj of climbsArray) {
-                myClimb = new Climb(climbJSONObj)
-                console.log(myClimb);
-                myClimb.addToClimbsContainer;
-            }
-        }
-    );
-
+    console.log("test");
     
-fetch(`${baseUrl}/1/sends`).then( function(res) {
-    return res.json();}).then(
-        function(sendsArray) {
-            console.log(sendsArray);
-            for ( const sendJSONObj of sendsArray) {
-                mySend = new Send(sendJSONObj)
-                console.log(mySend);
-                mySend.addToSendsContainer;
+
+
+    const baseUrl = "http://127.0.0.1:3000/climbs"
+
+    // fetch(`${baseUrl}/1`).then( function(res) {
+    //     return res.json();}).then(
+    //         function(climbJSONobj) {
+    //             console.log(climb);
+    //             myClimb = new Climb(climbJSONObj)
+    //             console.log(myClimb);
+    //             climbsContainer.innerHTML += myClimb.htmlTemplate;
+    //         }
+    //     );
+
+    fetch(`${baseUrl}`).then( function(res) {
+        return res.json();}).then(
+            function(climbsArray) {
+                console.log(climbsArray);
+                for ( const climbJSONObj of climbsArray) {
+                    myClimb = new Climb(climbJSONObj)
+                    console.log(myClimb);
+                    myClimb.addToClimbsContainer;
+                }
             }
-        }
-    );
+        );
+
+        
+    fetch(`${baseUrl}/1/sends`).then( function(res) {
+        return res.json();}).then(
+            function(sendsArray) {
+                console.log(sendsArray);
+                for ( const sendJSONObj of sendsArray) {
+                    mySend = new Send(sendJSONObj)
+                    console.log(mySend);
+                    mySend.addToSendsContainer;
+                }
+            }
+        );
+
+
+})
