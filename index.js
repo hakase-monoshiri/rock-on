@@ -45,13 +45,13 @@ const baseUrl = "http://127.0.0.1:3000/climbs"
 
 fetch(`${baseUrl}`).then( function(res) {
     return res.json();}).then(
-        function(climbs) {
-            console.log(climbs);
-            climbs.map(climb => {
+        function(climbsArray) {
+            console.log(climbsArray);
+            for ( const climb of climbsArray) {
                 const { climb_type, grade, location, notes, color , nickname} = climb;
                 const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
                 console.log(myClimb);
                 climbsContainer.innerHTML += myClimb.htmlTemplate;
             }
-        )}
+        }
     );
