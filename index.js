@@ -6,13 +6,13 @@ console.log(climbsContainer);
 
 class Climb {
 
-    constructor (climb_type, grade, location, notes, color, nickname) {
-        this.nickname = nickname;
-        this.climb_type = climb_type;
-        this.grade = grade;
-        this.location = location;
-        this.notes = notes;
-        this.color = color;
+    constructor (climbJSONObj) {
+        this.nickname = climbJSONObj.nickname;
+        this.climb_type = climbJSONObj.climb_type;
+        this.grade = climbJSONObj.grade;
+        this.location = climbJSONObj.location;
+        this.notes = climbJSONObj.notes;
+        this.color = climbJSONObj.color;
     }
     
     get _htmlTemplate() {
@@ -48,9 +48,10 @@ fetch(`${baseUrl}`).then( function(res) {
     return res.json();}).then(
         function(climbsArray) {
             console.log(climbsArray);
-            for ( const climb of climbsArray) {
-                const { climb_type, grade, location, notes, color , nickname} = climb;
-                const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
+            for ( const climbJSONObj of climbsArray) {
+                // const { climb_type, grade, location, notes, color , nickname} = climb;
+                // const myClimb = new Climb(climb_type, grade, location, notes, color, nickname) ;
+                myClimb = new Climb(climbJSONObj)
                 console.log(myClimb);
                 myClimb.addToClimbsContainer;
             }
