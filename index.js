@@ -8,6 +8,9 @@ console.log(sendsContainer);
 
 const climbSelector = document.getElementById("climb-selector")
 
+const climbSelectionButton = document.getElementById("climb-selector-submit")
+console.log(climbSelectionButton)
+
 // Class Declarations
 
 class Climb {
@@ -95,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         );
 
-        
+    
     fetch(`${baseUrl}/1/sends`).then( function(res) {
         return res.json();}).then(
             function(sendsArray) {
@@ -109,4 +112,22 @@ document.addEventListener("DOMContentLoaded", function() {
         );
 
 
+        climbSelectionButton.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            console.log(event);
+
+            console.log(climbSelector.selectedIndex)
+
+            fetch(`${baseUrl}/${climbSelector.selectedIndex + 1}`).then( function(res) {
+                return res.json();}).then(
+                    function(climbJSONObj) {
+                        console.log(climbJSONObj);
+                        myClimb = new Climb(climbJSONObj)
+                        myClimb.addToClimbsContainer;
+                    }
+                );
+
+
+        })
 })
