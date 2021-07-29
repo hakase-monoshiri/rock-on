@@ -1,10 +1,10 @@
 // Global variables and functions
 
-const climbsContainer = document.querySelector(".climbs-container");
-console.log(climbsContainer);
+// const climbsContainer = document.querySelector(".climbs-container");
+// console.log(climbsContainer);
 
-const sendsContainer = document.querySelector(".sends-container");
-console.log(sendsContainer);
+// const sendsContainer = document.querySelector(".sends-container");
+// console.log(sendsContainer);
 
 const climbSelector = document.getElementById("climb-selector")
 
