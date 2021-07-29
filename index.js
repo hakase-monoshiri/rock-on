@@ -13,6 +13,7 @@ console.log(climbSelectionButton)
 
 const baseUrl = "http://127.0.0.1:3000/climbs"
 
+const currentClimbContainer = document.getElementById("current-climb-container")
 
 function fetchClimbs(climbId) {
     fetch(`${baseUrl}/${climbId}`)
@@ -85,7 +86,11 @@ class Climb {
     };
 
     get addToClimbsContainer () {
-        climbsContainer.appendChild(this._htmlTemplate)
+        if (currentClimbContainer.childElementCount != 0) {
+        currentClimbContainer.replaceChild( this._htmlTemplate, currentClimbContainer.lastElementChild)}
+        else {
+        currentClimbContainer.appendChild(this._htmlTemplate)
+        }
     }
 
 
