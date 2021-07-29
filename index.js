@@ -11,6 +11,54 @@ const climbSelector = document.getElementById("climb-selector")
 const climbSelectionButton = document.getElementById("climb-selector-submit")
 console.log(climbSelectionButton)
 
+const baseUrl = "http://127.0.0.1:3000/climbs"
+
+
+function fetchClimbs(climbId) {
+    fetch(`${baseUrl}/${climbId}`)
+    .then( function(res) {
+        return res.json();
+    })
+    .then( function(climbJSONObj) {
+            myClimb = new Climb(climbJSONObj)
+            myClimb.addToClimbsContainer;
+        }
+    )
+};
+
+function fetchSends(climbId) {
+    fetch(`${baseUrl}/${climbId}/sends`)
+        .then( function(res) {
+            return res.json();
+        })
+        .then( function(sendsArray) {
+            for ( const sendJSONObj of sendsArray) {
+                mySend = new Send(sendJSONObj)
+                mySend.addToSendsContainer;
+                }
+            }
+        );
+}
+
+function watchSumbitButton () {
+    
+    climbSelectionButton.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        console.log(event);
+
+        console.log(climbSelector.selectedIndex)
+
+        let climbId = climbSelector.selectedIndex + 1
+
+        fetchClimbs(climbId);
+        fetchSends(climbId);    
+
+    })
+}
+
+
 // Class Declarations
 
 class Climb {
@@ -25,18 +73,21 @@ class Climb {
     }
     
     get _htmlTemplate() {
-        return ` <h3> ${this.nickname} </h3>
+        const container = document.createElement('div');
+        container.innerHTML = ` <h3> ${this.nickname} </h3>
         <h5> ${this.color}: ${this.grade} </h5>
         <h5> ${this.climb_type} </h5>
         <h5> ${this.location} </h5>
         <p> ${this.notes} </p>
-        `
+        `;
+        return container
 
     };
 
     get addToClimbsContainer () {
-        climbsContainer.innerHTML += this._htmlTemplate
+        climbsContainer.appendChild(this._htmlTemplate)
     }
+
 
     get addToClimbSelector () {
        const climbOption = document.createElement('option');
@@ -55,15 +106,17 @@ class Send {
     }
     
     get _htmlTemplate() {
-        return ` <h3> ${this.climber} </h3>
+        const container = document.createElement('div');
+        container.innerHTML = `<h3> ${this.climber} </h3>
         <h5> Completed on: ${this.date} </h5>
         <p> ${this.notes} </p>
-        `
+        `;
+        return container
 
     };
 
     get addToSendsContainer () {
-        sendsContainer.innerHTML += this._htmlTemplate
+        sendsContainer.appendChild(this._htmlTemplate)
     }
 }
 
@@ -72,10 +125,6 @@ class Send {
 document.addEventListener("DOMContentLoaded", function() {
 
     console.log("test");
-    
-
-
-    const baseUrl = "http://127.0.0.1:3000/climbs"
 
     // fetch(`${baseUrl}/1`).then( function(res) {
     //     return res.json();}).then(
@@ -98,36 +147,8 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         );
 
+    watchSumbitButton();
 
-        climbSelectionButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            console.log(event);
-
-            console.log(climbSelector.selectedIndex)
-
-            let climbId = climbSelector.selectedIndex + 1
-
-            fetch(`${baseUrl}/${climbId}`).then( function(res) {
-                return res.json();}).then(
-                    function(climbJSONObj) {
-                        console.log(climbJSONObj);
-                        myClimb = new Climb(climbJSONObj)
-                        myClimb.addToClimbsContainer;
-                    }
-                );
-
-            fetch(`${baseUrl}/${climbId}/sends`).then( function(res) {
-                return res.json();}).then(
-                    function(sendsArray) {
-                        console.log(sendsArray);
-                        for ( const sendJSONObj of sendsArray) {
-                            mySend = new Send(sendJSONObj)
-                            console.log(mySend);
-                            mySend.addToSendsContainer;
-                        }
-                    }
-                );
-        })
 })
+
+
