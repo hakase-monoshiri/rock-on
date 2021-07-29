@@ -15,6 +15,8 @@ const baseUrl = "http://127.0.0.1:3000/climbs"
 
 const currentClimbContainer = document.getElementById("current-climb-container")
 
+const currentSendsContainer = document.getElementById("current-sends-container")
+
 function fetchClimbs(climbId) {
     fetch(`${baseUrl}/${climbId}`)
     .then( function(res) {
@@ -121,7 +123,11 @@ class Send {
     };
 
     get addToSendsContainer () {
-        sendsContainer.appendChild(this._htmlTemplate)
+        if (currentSendsContainer.childElementCount != 0) {
+            currentSendsContainer.replaceChild( this._htmlTemplate, currentSendsContainer.lastElementChild)}
+        else {
+            currentSendsContainer.appendChild(this._htmlTemplate)
+            }
     }
 }
 
