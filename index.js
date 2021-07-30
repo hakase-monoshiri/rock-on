@@ -17,6 +17,9 @@ const currentClimbContainer = document.getElementById("current-climb-container")
 
 const currentSendsContainer = document.getElementById("current-sends-container")
 
+const displaySendFormButton = document.getElementById("show-send-form-button")
+console.log(displaySendFormButton)
+
 function fetchClimbs(climbId) {
     fetch(`${baseUrl}/${climbId}`)
     .then( function(res) {
@@ -57,6 +60,18 @@ function watchSumbitButton () {
 
         fetchClimbs(climbId);
         fetchSends(climbId);    
+
+    })
+}
+
+function watchSendFormButton () {
+    displaySendFormButton.addEventListener("click", e => {
+        e.preventDefault();
+
+        console.log(e)
+
+
+
 
     })
 }
@@ -114,6 +129,7 @@ class Send {
     
     get _htmlTemplate() {
         const container = document.createElement('div');
+        container.id = `Send-${this.date}`;
         container.innerHTML = `<h3> ${this.climber} </h3>
         <h5> Completed on: ${this.date} </h5>
         <p> ${this.notes} </p>
@@ -129,6 +145,18 @@ class Send {
             currentSendsContainer.appendChild(this._htmlTemplate)
             }
     }
+
+    static newForm() {
+        const container = document.createElement('form');
+        container.id = `Send-${this.date}`;
+        container.innerHTML = `<input type=Text> ${this.climber} </h3>
+        <h5> Completed on: ${this.date} </h5>
+        <p> ${this.notes} </p>
+        `;
+        return container
+
+    }
+
 }
 
 // Stuff that actually runs the web app front-end 
@@ -159,6 +187,8 @@ document.addEventListener("DOMContentLoaded", function() {
         );
 
     watchSumbitButton();
+
+    watchSendFormButton();
 
 })
 
