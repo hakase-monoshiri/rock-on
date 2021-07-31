@@ -225,7 +225,7 @@ class Send {
     }
     get displayDate () {
         const dateArray = this.date.split(/\D/);
-        return `${dateArray[1]}-${dateArray[2]}-${dateArray[0]}`
+        return `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`
     }
 
     get deleteButton () {
