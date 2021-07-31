@@ -44,3 +44,8 @@ h1 {
 #show-send-form-button {
     margin: 5px;
 }
+
+.send-delete-button {
+    background-color: red;
+    color: white;
+}

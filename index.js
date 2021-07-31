@@ -223,6 +223,15 @@ class Send {
         this.notes = sendJSONObj.notes;
         this.climb_id = sendJSONObj.climb_id;
     }
+
+    get deleteButton () {
+        const button = document.createElement('button');
+        button.setAttribute('type', 'button');
+        button.className = 'send-delete-button';
+        button.id = `Send-${this.date}-delete-button`;
+        button.innerText = 'Delete'
+        return button
+    }
     
     get _htmlTemplate() {
         const container = document.createElement('div');
@@ -231,6 +240,8 @@ class Send {
         <h5> Completed on: ${this.date} </h5>
         <p> ${this.notes} </p>
         `;
+        container.append(this.deleteButton);
+
         return container
 
     };
