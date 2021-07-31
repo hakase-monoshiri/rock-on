@@ -22,7 +22,6 @@ let currentClimbs;
 
 let currentSends;
 
-
 function fetchClimbs(climbId) {
     fetch(`${baseUrl}/${climbId}`)
     .then( function(res) {
@@ -45,7 +44,6 @@ function fetchSends(climbId) {
         .then( function(sendsArray) {
             currentSends = sendsArray.map( (sendJSONObj) => {
                 mySend = new Send(sendJSONObj)
-                // mySend.addToSendsSelector;
                 return mySend;
                 }
             )}
@@ -63,11 +61,16 @@ function populateSendSelector (sendList) {
     }
 }
 
-function displaySend(sendListNumber) {
-    let sendToDisplay =  currentSends[sendListNumber];
+function displaySend(send) {
+    let sendToDisplay = send;
 
+    if (sendToDisplay) {
    sendToDisplay.addToSendsContainer;
    watchSendDeleteButton(sendToDisplay);
+    }
+    else {
+        currentSendsContainer.innerHTML = ''
+    }
 }
 
 function watchClimbSelection () {
@@ -86,6 +89,7 @@ function watchClimbSelection () {
         fetchSends(climbId);
 
         setTimeout(() => populateSendSelector(currentSends), 100);
+        displaySend();
     })
 }
 
@@ -97,8 +101,9 @@ function watchSendSelection () {
 
         console.log(event);
 
-        let sendListNumber = sendSelector.selectedIndex
-        displaySend(sendListNumber);
+        let selectedSend = currentSends[sendSelector.selectedIndex];
+        displaySend(selectedSend);
+
     })
 }
 
@@ -138,8 +143,7 @@ function createSendFromForm (form) {
 function submitNewSend (send) {
     
     let sendJSONObj = send;
-    let climbId = send.climbId;
-
+    let climbId = send.climb_id;
 
       let configObj = {
         method: "POST",
@@ -161,6 +165,14 @@ function submitNewSend (send) {
           alert("Bad things! Didn't work");
           console.log(error.message);
         });
+
+    
+    setTimeout( () => fetchSends(climbId), 100);
+    setTimeout( () => {
+        populateSendSelector(currentSends);
+        displaySend(send);
+    }, 200);
+
 }
 
 function watchSendFormSubmitButton (form) {
@@ -200,6 +212,14 @@ function deleteSend (send) {
           alert("Bad things! Didn't work");
           console.log(error.message);
         });
+
+    setTimeout( () => fetchSends(climbId), 100);
+    setTimeout( () => {
+        populateSendSelector(currentSends);
+        displaySend(send)
+    }, 200);
+
+
 }
 
 function watchSendDeleteButton (sendToDelete) {
@@ -284,9 +304,9 @@ class Send {
     get _htmlTemplate() {
         const container = document.createElement('div');
         container.id = `Send-${this.id}`;
-        container.innerHTML = `<h3> ${this.climber} </h3>
+        container.innerHTML = `<h3> Climbed By: ${this.climber} </h3>
         <h5> Completed on: ${this.displayDate} </h5>
-        <p> ${this.notes} </p>
+        <p> Notes: ${this.notes} </p>
         `;
         container.append(this.deleteButton);
 
@@ -306,7 +326,7 @@ class Send {
     get addToSendsSelector () {
         const sendOption = document.createElement('option');
         sendOption.innerText = `${this.climber}: ${this.displayDate}`;
-        sendOption.id = `send-option-${this.climb_id}`;
+        sendOption.id = `send-option-${this.id}`;
         console.log(sendOption)
         sendSelector.appendChild(sendOption);
      }
