@@ -1,11 +1,13 @@
 // Global variables and functions
 
-const climbSelector = document.getElementById("climb-selector")
+const climbSelector = document.getElementById("climb-selector");
 
-const climbSelectionButton = document.getElementById("climb-selector-submit")
+const sendSelector = document.getElementById("send-selector");
+
+const climbSelectionButton = document.getElementById("climb-selector-submit");
 console.log(climbSelectionButton)
 
-const baseUrl = "http://127.0.0.1:3000/climbs"
+const baseUrl = "http://127.0.0.1:3000/climbs";
 
 const currentClimbContainer = document.getElementById("current-climb-container");
 
@@ -16,6 +18,10 @@ const sendsFormContainer = document.querySelector(".sends-form-container");
 const displaySendFormButton = document.getElementById("show-send-form-button")
 
 let newSendForm;
+
+let currentClimbs;
+
+let currentSends;
 
 console.log(displaySendFormButton)
 
@@ -32,22 +38,40 @@ function fetchClimbs(climbId) {
 };
 
 function fetchSends(climbId) {
+    currentSends = [];
+    
     fetch(`${baseUrl}/${climbId}/sends`)
         .then( function(res) {
             return res.json();
         })
         .then( function(sendsArray) {
-            for ( const sendJSONObj of sendsArray) {
+            currentSends = sendsArray.map( (sendJSONObj) => {
                 mySend = new Send(sendJSONObj)
-                mySend.addToSendsContainer;
+                // mySend.addToSendsSelector;
+                return mySend;
                 }
-            }
+            )}
         );
+}
+
+function populateSendSelector (sendList) {
+    if (sendSelector.childElementCount > 0) {
+        sendSelector.innerHTML = ''
+    }
+  
+    for (const send of sendList) {
+        console.log(send);
+        send.addToSendsSelector;
+    }
+}
+
+function displaySend(sendListNumber) {
+    currentSends[sendListNumber].addToSendsContainer;
 }
 
 function watchClimbSelection () {
     
-    climbSelectionButton.addEventListener("click", function(event) {
+    climbSelector.addEventListener("click", function(event) {
 
         event.preventDefault();
 
@@ -58,8 +82,22 @@ function watchClimbSelection () {
 
         
         fetchClimbs(climbId);
-        fetchSends(climbId);    
+        fetchSends(climbId);
 
+        setTimeout(() => populateSendSelector(currentSends), 100);
+    })
+}
+
+function watchSendSelection () {
+    
+    sendSelector.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        console.log(event);
+
+        let sendListNumber = sendSelector.selectedIndex
+        displaySend(sendListNumber);
     })
 }
 
@@ -199,11 +237,21 @@ class Send {
 
     get addToSendsContainer () {
         if (currentSendsContainer.childElementCount != 0) {
-            currentSendsContainer.replaceChild( this._htmlTemplate, currentSendsContainer.lastElementChild)}
+            currentSendsContainer.replaceChild( this._htmlTemplate, currentSendsContainer.lastElementChild)
+        }
         else {
             currentSendsContainer.appendChild(this._htmlTemplate)
-            }
+        }
     }
+
+    get addToSendsSelector () {
+        const sendOption = document.createElement('option');
+        sendOption.innerText = `${this. climber}: ${this.date}`;
+        sendOption.id = `send-option-${this.climb_id}`;
+        console.log(sendOption)
+        sendSelector.appendChild(sendOption);
+     }
+ 
 
     static newForm() {
 
@@ -293,6 +341,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     watchClimbSelection();
+
+    watchSendSelection();
 
     watchDisplaySendFormButton();
 
