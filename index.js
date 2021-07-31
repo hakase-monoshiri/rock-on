@@ -79,7 +79,28 @@ function watchSendFormButton () {
     })
 }
 
-
+// function submitNewSend (climbId, send) {
+//       let configObj = {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           "Accept": "application/json"
+//         },
+//         body: JSON.stringify(send)
+//       };
+      
+//     fetch(`${baseUrl}/${climbId}/sends}`, configObj)
+//         .then(function(response) {
+//           return response.json();
+//         })
+//         .then(function(object) {
+//           console.log(object);
+//         })
+//         .catch(function(error) {
+//           alert("Bad things! Ragnarők!");
+//           console.log(error.message);
+//         });
+// }
 
 // Class Declarations
 
