@@ -7,11 +7,13 @@ console.log(climbSelectionButton)
 
 const baseUrl = "http://127.0.0.1:3000/climbs"
 
-const currentClimbContainer = document.getElementById("current-climb-container")
+const currentClimbContainer = document.getElementById("current-climb-container");
 
-const currentSendsContainer = document.getElementById("current-sends-container")
+const currentSendsContainer = document.getElementById("current-sends-container");
 
 const sendsFormContainer = document.querySelector(".sends-form-container");
+
+let newSendForm;
 
 const displaySendFormButton = document.getElementById("show-send-form-button")
 console.log(displaySendFormButton)
@@ -42,7 +44,7 @@ function fetchSends(climbId) {
         );
 }
 
-function watchSumbitButton () {
+function watchClimbSelection () {
     
     climbSelectionButton.addEventListener("click", function(event) {
 
@@ -61,19 +63,22 @@ function watchSumbitButton () {
 }
 
 function watchSendFormButton () {
+
     displaySendFormButton.addEventListener("click", e => {
         e.preventDefault();
 
         console.log(e)
 
         if (sendsFormContainer.childElementCount < 1) {
-            Send.appendForm(sendsFormContainer);
+            newSendForm = Send.appendForm(sendsFormContainer);
         }
         else {
             sendsFormContainer.innerHTML = "";
+            newSendForm = null;
         }
     })
 }
+
 
 
 // Class Declarations
@@ -196,7 +201,9 @@ class Send {
     }
 
     static appendForm(containerElement) {
-        containerElement.append(this.newForm());
+        const sendForm = this.newForm();
+        containerElement.append(sendForm);
+        return sendForm;
     }
 
 }
@@ -228,10 +235,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         );
 
-    watchSumbitButton();
+    watchClimbSelection();
 
     watchSendFormButton();
 
 })
-
 
