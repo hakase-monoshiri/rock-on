@@ -13,9 +13,10 @@ const currentSendsContainer = document.getElementById("current-sends-container")
 
 const sendsFormContainer = document.querySelector(".sends-form-container");
 
+const displaySendFormButton = document.getElementById("show-send-form-button")
+
 let newSendForm;
 
-const displaySendFormButton = document.getElementById("show-send-form-button")
 console.log(displaySendFormButton)
 
 function fetchClimbs(climbId) {
@@ -52,17 +53,17 @@ function watchClimbSelection () {
 
         console.log(event);
 
-        console.log(climbSelector.selectedIndex)
+        console.log(climbSelector.selectedIndex);
+        let climbId = climbSelector.selectedIndex + 1;
 
-        let climbId = climbSelector.selectedIndex + 1
-
+        
         fetchClimbs(climbId);
         fetchSends(climbId);    
 
     })
 }
 
-function watchSendFormButton () {
+function watchDisplaySendFormButton () {
 
     displaySendFormButton.addEventListener("click", e => {
         e.preventDefault();
@@ -71,10 +72,10 @@ function watchSendFormButton () {
 
         if (sendsFormContainer.childElementCount < 1) {
             newSendForm = Send.appendForm(sendsFormContainer);
+            watchSendFormSubmitButton (newSendForm);
         }
         else {
             sendsFormContainer.innerHTML = "";
-            newSendForm = null;
         }
     })
 }
@@ -93,28 +94,41 @@ function createSendFromForm (form) {
     return newSend
 }
 
-// function submitNewSend (climbId, send) {
-//       let configObj = {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           "Accept": "application/json"
-//         },
-//         body: JSON.stringify(send)
-//       };
+function watchSendFormSubmitButton (form) {
+
+    form.elements["send-form-submit-button"].addEventListener("click", e => {
+        e.preventDefault();
+
+        const newSend = createSendFromForm(newSendForm);
+    
+        let climbId = climbSelector.selectedIndex + 1;
+        submitNewSend(climbId,newSend);
+    })
+}
+
+
+function submitNewSend (climbId, send) {
+      let configObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(send)
+      };
       
-//     fetch(`${baseUrl}/${climbId}/sends}`, configObj)
-//         .then(function(response) {
-//           return response.json();
-//         })
-//         .then(function(object) {
-//           console.log(object);
-//         })
-//         .catch(function(error) {
-//           alert("Bad things! Ragnarők!");
-//           console.log(error.message);
-//         });
-// }
+    fetch(`${baseUrl}/${climbId}/sends`, configObj)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(object) {
+          console.log(object);
+        })
+        .catch(function(error) {
+          alert("Bad things! Didn't work");
+          console.log(error.message);
+        });
+}
 
 // Class Declarations
 
@@ -204,18 +218,19 @@ class Send {
 
         // ===== format element attributes ======//
 
-        sendClimberLabel.innerText = `Climber: `
-        sendClimberInput.id = `send-form-climber-input`
-        sendClimberInput.setAttribute("type", "text")
+        sendClimberLabel.innerText = `Climber: `;
+        sendClimberInput.id = `send-form-climber-input`;
+        sendClimberInput.setAttribute("type", "text");
 
-        sendDateLabel.innerText = `Date: `
-        sendDateInput.id = `send-form-date-input`
-        sendDateInput.setAttribute("type", "date")
+        sendDateLabel.innerText = `Date: `;
+        sendDateInput.id = `send-form-date-input`;
+        sendDateInput.setAttribute("type", "date");
 
-        sendNotesLabel.innerText = `Notes: `
-        sendNotesInput.id = `send-form-notes-input`
+        sendNotesLabel.innerText = `Notes: `;
+        sendNotesInput.id = `send-form-notes-input`;
 
-        sendFormButton.innerText = `Yeah I Sent it!`
+        sendFormButton.innerText = `Yeah I Sent it!`;
+        sendFormButton.id = `send-form-submit-button`;
 
         // ===== append to send form container ======//
 
@@ -270,12 +285,10 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         );
 
+
     watchClimbSelection();
 
-    watchSendFormButton();
-
-    const newSend = createSendFromForm(newSendForm);
-    
+    watchDisplaySendFormButton();
 
 })
 
