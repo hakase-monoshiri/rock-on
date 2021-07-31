@@ -223,12 +223,16 @@ class Send {
         this.notes = sendJSONObj.notes;
         this.climb_id = sendJSONObj.climb_id;
     }
+    get displayDate () {
+        const dateArray = this.date.split(/\D/);
+        return `${dateArray[1]}-${dateArray[2]}-${dateArray[0]}`
+    }
 
     get deleteButton () {
         const button = document.createElement('button');
         button.setAttribute('type', 'button');
         button.className = 'send-delete-button';
-        button.id = `Send-${this.date}-delete-button`;
+        button.id = `send-${this.displayDate}-delete-button`;
         button.innerText = 'Delete'
         return button
     }
@@ -237,7 +241,7 @@ class Send {
         const container = document.createElement('div');
         container.id = `Send-${this.date}`;
         container.innerHTML = `<h3> ${this.climber} </h3>
-        <h5> Completed on: ${this.date} </h5>
+        <h5> Completed on: ${this.displayDate} </h5>
         <p> ${this.notes} </p>
         `;
         container.append(this.deleteButton);
@@ -257,7 +261,7 @@ class Send {
 
     get addToSendsSelector () {
         const sendOption = document.createElement('option');
-        sendOption.innerText = `${this. climber}: ${this.date}`;
+        sendOption.innerText = `${this.climber}: ${this.displayDate}`;
         sendOption.id = `send-option-${this.climb_id}`;
         console.log(sendOption)
         sendSelector.appendChild(sendOption);
