@@ -16,6 +16,18 @@ class SendsController < ApplicationController
         send.save
         render json: send
     end
+
+    def destroy
+        send = Send.find_by(id: params[:id])
+        if send
+            send.destroy
+            success_obj = {sucess: "Deleted"}
+            render json: success_obj
+        else
+            error_obj = {error: "Did not delete"}
+            render json: error_obj
+        end
+    end
     
     private
 

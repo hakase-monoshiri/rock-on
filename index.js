@@ -5,7 +5,6 @@ const climbSelector = document.getElementById("climb-selector");
 const sendSelector = document.getElementById("send-selector");
 
 const climbSelectionButton = document.getElementById("climb-selector-submit");
-console.log(climbSelectionButton)
 
 const baseUrl = "http://127.0.0.1:3000/climbs";
 
@@ -23,7 +22,6 @@ let currentClimbs;
 
 let currentSends;
 
-console.log(displaySendFormButton)
 
 function fetchClimbs(climbId) {
     fetch(`${baseUrl}/${climbId}`)
@@ -66,7 +64,10 @@ function populateSendSelector (sendList) {
 }
 
 function displaySend(sendListNumber) {
-    currentSends[sendListNumber].addToSendsContainer;
+    let sendToDisplay =  currentSends[sendListNumber];
+
+   sendToDisplay.addToSendsContainer;
+   watchSendDeleteButton(sendToDisplay);
 }
 
 function watchClimbSelection () {
@@ -133,17 +134,6 @@ function createSendFromForm (form) {
     return newSend
 }
 
-function watchSendFormSubmitButton (form) {
-
-    form.elements["send-form-submit-button"].addEventListener("click", e => {
-        e.preventDefault();
-
-        const newSend = createSendFromForm(newSendForm);
-
-        submitNewSend(newSend);
-    })
-}
-
 
 function submitNewSend (send) {
     
@@ -173,6 +163,18 @@ function submitNewSend (send) {
         });
 }
 
+function watchSendFormSubmitButton (form) {
+
+    form.elements["send-form-submit-button"].addEventListener("click", e => {
+        e.preventDefault();
+
+        const newSend = createSendFromForm(newSendForm);
+
+        submitNewSend(newSend);
+    })
+}
+
+
 function deleteSend (send) {
 
     let sendJSONObj = send;
@@ -198,6 +200,19 @@ function deleteSend (send) {
           alert("Bad things! Didn't work");
           console.log(error.message);
         });
+}
+
+function watchSendDeleteButton (sendToDelete) {
+
+    console.log(sendToDelete);
+
+    const sendDeleteButton = document.querySelector(".send-delete-button")
+
+    sendDeleteButton.addEventListener("click", e => {
+        e.preventDefault();
+
+        deleteSend(sendToDelete);
+    })
 }
 
 
