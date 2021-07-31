@@ -15,6 +15,7 @@ h1 {
     width: 40vw;
     margin: 2vw;
     padding: 20px;
+    min-height: 40vh;
 }
 
 .sends-container {
@@ -22,6 +23,7 @@ h1 {
     width: 40vw;
     margin: 2vw;
     padding: 20px;
+    min-height: 40vh;
 }
 
 
@@ -31,4 +33,14 @@ h1 {
     margin: 20px;
     padding: 20px;
     
+}
+
+.forms-and-details-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+#show-send-form-button {
+    margin: 5px;
 }
