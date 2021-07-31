@@ -1,12 +1,16 @@
 body {
-    background-color: black;
-    color: white;
+    background-color: rgb(130, 230, 230);
+    color: rgb(31, 23, 2);
+    font-size: larger;
 }
 
-text-color
+h2 {
+    margin: 10px;
+}
 
 h1 {
-    color: oldlace;
+    color: black;
+    text-shadow: 1 1 5px rgb(243, 228, 187), 0 0 5px inherit;
 }
 
 
@@ -36,7 +40,8 @@ h1 {
 }
 
 .forms-and-details-container {
-    width: 80%;
+    float: left;
+    width: 100%;
     margin: auto;
     text-align: center;
 }
@@ -49,3 +54,41 @@ h1 {
     background-color: red;
     color: white;
 }
+
+label {
+    display: block;
+}
+
+select {
+    width: 100%;
+    border: thick;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #f1f1f1;
+    font-size: x-large;
+  }
+
+.send-form input {
+    text-align: left;
+    width: auto;
+    height: 24px;
+    border: thick;
+    border-color: teal;
+    margin: 10px;
+}
+
+.send-form textarea {
+    width: 50%;
+    height: 20vh;
+}
+
+#current-climb-container, #current-send-container {
+    font-size: medium;
+    background-color: cornsilk;
+    border-color: darkcyan;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+

@@ -10,7 +10,7 @@ const baseUrl = "http://127.0.0.1:3000/climbs";
 
 const currentClimbContainer = document.getElementById("current-climb-container");
 
-const currentSendsContainer = document.getElementById("current-sends-container");
+const currentSendsContainer = document.getElementById("current-send-container");
 
 const sendsFormContainer = document.querySelector(".sends-form-container");
 
@@ -348,8 +348,9 @@ class Send {
         const sendNotesInput = document.createElement('textarea');
 
         const sendFormButton = document.createElement('button');
-
         // ===== format element attributes ======//
+
+        sendFormContainer.classList.add("send-form");
 
         sendClimberLabel.innerText = `Climber: `;
         sendClimberInput.id = `send-form-climber-input`;
@@ -368,13 +369,14 @@ class Send {
         // ===== append to send form container ======//
 
         sendFormContainer.appendChild(sendClimberLabel);
-        sendFormContainer.appendChild(sendClimberInput);
+        sendClimberLabel.append(sendClimberInput);
         
         sendFormContainer.appendChild(sendDateLabel);
-        sendFormContainer.appendChild(sendDateInput);
+        sendDateLabel.append(sendDateInput);
+
         
         sendFormContainer.appendChild(sendNotesLabel);
-        sendFormContainer.appendChild(sendNotesInput);
+        sendNotesLabel.append(sendNotesInput);
 
         sendFormContainer.appendChild(sendFormButton);
         
