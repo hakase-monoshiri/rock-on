@@ -216,7 +216,7 @@ function deleteSend (send) {
     setTimeout( () => fetchSends(climbId), 100);
     setTimeout( () => {
         populateSendSelector(currentSends);
-        displaySend(send)
+        displaySend()
     }, 200);
 
 
