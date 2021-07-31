@@ -173,6 +173,34 @@ function submitNewSend (send) {
         });
 }
 
+function deleteSend (send) {
+
+    let sendJSONObj = send;
+    let climbId = send.climb_id;
+
+      let configObj = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({send: sendJSONObj})
+      };
+      
+    fetch(`${baseUrl}/${climbId}/sends/${sendJSONObj.id}`, configObj)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(object) {
+          console.log(object);
+        })
+        .catch(function(error) {
+          alert("Bad things! Didn't work");
+          console.log(error.message);
+        });
+}
+
+
 // Class Declarations
 
 class Climb {
@@ -222,6 +250,7 @@ class Send {
         this.date = sendJSONObj.date;
         this.notes = sendJSONObj.notes;
         this.climb_id = sendJSONObj.climb_id;
+        this.id = sendJSONObj.id;
     }
     get displayDate () {
         const dateArray = this.date.split(/\D/);
@@ -232,14 +261,14 @@ class Send {
         const button = document.createElement('button');
         button.setAttribute('type', 'button');
         button.className = 'send-delete-button';
-        button.id = `send-${this.displayDate}-delete-button`;
+        button.id = `send-${this.id}-delete-button`;
         button.innerText = 'Delete'
         return button
     }
     
     get _htmlTemplate() {
         const container = document.createElement('div');
-        container.id = `Send-${this.date}`;
+        container.id = `Send-${this.id}`;
         container.innerHTML = `<h3> ${this.climber} </h3>
         <h5> Completed on: ${this.displayDate} </h5>
         <p> ${this.notes} </p>
