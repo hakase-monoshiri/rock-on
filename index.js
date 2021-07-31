@@ -1,11 +1,5 @@
 // Global variables and functions
 
-// const climbsContainer = document.querySelector(".climbs-container");
-// console.log(climbsContainer);
-
-// const sendsContainer = document.querySelector(".sends-container");
-// console.log(sendsContainer);
-
 const climbSelector = document.getElementById("climb-selector")
 
 const climbSelectionButton = document.getElementById("climb-selector-submit")
@@ -16,6 +10,8 @@ const baseUrl = "http://127.0.0.1:3000/climbs"
 const currentClimbContainer = document.getElementById("current-climb-container")
 
 const currentSendsContainer = document.getElementById("current-sends-container")
+
+const sendsFormContainer = document.querySelector(".sends-form-container");
 
 const displaySendFormButton = document.getElementById("show-send-form-button")
 console.log(displaySendFormButton)
@@ -70,9 +66,12 @@ function watchSendFormButton () {
 
         console.log(e)
 
-
-
-
+        if (sendsFormContainer.childElementCount < 1) {
+            Send.appendForm(sendsFormContainer);
+        }
+        else {
+            sendsFormContainer.innerHTML = "";
+        }
     })
 }
 
@@ -147,14 +146,57 @@ class Send {
     }
 
     static newForm() {
-        const container = document.createElement('form');
-        container.id = `Send-${this.date}`;
-        container.innerHTML = `<input type=Text> ${this.climber} </h3>
-        <h5> Completed on: ${this.date} </h5>
-        <p> ${this.notes} </p>
-        `;
-        return container
 
+        // ===== create form container and input elements ======//
+
+        const sendFormContainer = document.createElement('form');
+
+        const sendClimberLabel = document.createElement('label');
+        const sendClimberInput = document.createElement('input');
+
+        const sendDateLabel = document.createElement('label');
+        const sendDateInput = document.createElement('input');
+
+        const sendNotesLabel = document.createElement('label');
+        const sendNotesInput = document.createElement('textarea');
+
+        const sendFormButton = document.createElement('button');
+
+        // ===== format element attributes ======//
+
+        sendClimberLabel.innerText = `Climber: `
+        sendClimberInput.className = `send-climber-input`
+        sendClimberInput.setAttribute("type", "text")
+
+        sendDateLabel.innerText = `Date: `
+        sendDateInput.className = `send-date-input`
+        sendDateInput.setAttribute("type", "date")
+
+        sendNotesLabel.innerText = `Notes: `
+        sendNotesInput.className = `send-notes-input`
+
+        sendFormButton.innerText = `Yeah I Sent it!`
+
+        // ===== append to send form container ======//
+
+        sendFormContainer.appendChild(sendClimberLabel);
+        sendFormContainer.appendChild(sendClimberInput);
+        
+        sendFormContainer.appendChild(sendDateLabel);
+        sendFormContainer.appendChild(sendDateInput);
+        
+        sendFormContainer.appendChild(sendNotesLabel);
+        sendFormContainer.appendChild(sendNotesInput);
+
+        sendFormContainer.appendChild(sendFormButton);
+        
+        //====== return form container=====//
+
+        return sendFormContainer
+    }
+
+    static appendForm(containerElement) {
+        containerElement.append(this.newForm());
     }
 
 }
