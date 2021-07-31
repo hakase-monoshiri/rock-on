@@ -79,6 +79,20 @@ function watchSendFormButton () {
     })
 }
 
+function createSendFromForm (form) {
+
+    const sendJSONObj = {
+        climber: form.elements["send-form-climber-input"].value,
+        date: form.elements["send-form-date-input"].value,
+        notes: form.elements["send-form-notes-input"].value,
+    }
+
+    const newSend = new Send(sendJSONObj);
+    console.log(newSend);
+
+    return newSend
+}
+
 // function submitNewSend (climbId, send) {
 //       let configObj = {
 //         method: "POST",
@@ -191,15 +205,15 @@ class Send {
         // ===== format element attributes ======//
 
         sendClimberLabel.innerText = `Climber: `
-        sendClimberInput.className = `send-climber-input`
+        sendClimberInput.id = `send-form-climber-input`
         sendClimberInput.setAttribute("type", "text")
 
         sendDateLabel.innerText = `Date: `
-        sendDateInput.className = `send-date-input`
+        sendDateInput.id = `send-form-date-input`
         sendDateInput.setAttribute("type", "date")
 
         sendNotesLabel.innerText = `Notes: `
-        sendNotesInput.className = `send-notes-input`
+        sendNotesInput.id = `send-form-notes-input`
 
         sendFormButton.innerText = `Yeah I Sent it!`
 
@@ -259,6 +273,9 @@ document.addEventListener("DOMContentLoaded", function() {
     watchClimbSelection();
 
     watchSendFormButton();
+
+    const newSend = createSendFromForm(newSendForm);
+    
 
 })
 
