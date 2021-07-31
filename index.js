@@ -86,6 +86,7 @@ function createSendFromForm (form) {
         climber: form.elements["send-form-climber-input"].value,
         date: form.elements["send-form-date-input"].value,
         notes: form.elements["send-form-notes-input"].value,
+        climb_id: climbSelector.selectedIndex + 1
     }
 
     const newSend = new Send(sendJSONObj);
@@ -100,21 +101,25 @@ function watchSendFormSubmitButton (form) {
         e.preventDefault();
 
         const newSend = createSendFromForm(newSendForm);
-    
-        let climbId = climbSelector.selectedIndex + 1;
-        submitNewSend(climbId,newSend);
+
+        submitNewSend(newSend);
     })
 }
 
 
-function submitNewSend (climbId, send) {
+function submitNewSend (send) {
+    
+    let sendJSONObj = send;
+    let climbId = send.climbId;
+
+
       let configObj = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(send)
+        body: JSON.stringify({send: sendJSONObj})
       };
       
     fetch(`${baseUrl}/${climbId}/sends`, configObj)
@@ -178,6 +183,7 @@ class Send {
         this.climber = sendJSONObj.climber;
         this.date = sendJSONObj.date;
         this.notes = sendJSONObj.notes;
+        this.climb_id = sendJSONObj.climb_id;
     }
     
     get _htmlTemplate() {

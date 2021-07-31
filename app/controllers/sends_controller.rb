@@ -11,6 +11,11 @@ class SendsController < ApplicationController
         render json: send
     end
 
+    def create
+        send = Send.new(send_params)
+        send.save
+        render json: send
+    end
     
     private
 
