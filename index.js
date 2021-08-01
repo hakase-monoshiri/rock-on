@@ -22,7 +22,20 @@ let currentClimbs;
 
 let currentSends;
 
-function fetchClimbs(climbId) {
+function fetchForClimbsSelector () {
+    fetch(`${baseUrl}`).then( function(res) {
+        return res.json();}).then(
+            function(climbsArray) {
+                console.log(climbsArray);
+                for ( const climbJSONObj of climbsArray) {
+                    myClimb = new Climb(climbJSONObj)
+                    myClimb.addToClimbSelector ;
+                }
+            }
+        );
+}
+
+function fetchSingleClimb(climbId) {
     fetch(`${baseUrl}/${climbId}`)
     .then( function(res) {
         return res.json();
@@ -33,6 +46,7 @@ function fetchClimbs(climbId) {
         }
     )
 };
+
 
 function fetchSends(climbId) {
     currentSends = [];
@@ -85,7 +99,7 @@ function watchClimbSelection () {
         let climbId = climbSelector.selectedIndex + 1;
 
         
-        fetchClimbs(climbId);
+        fetchSingleClimb(climbId);
         fetchSends(climbId);
 
         setTimeout(() => populateSendSelector(currentSends), 100);
@@ -399,27 +413,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     console.log("test");
 
-    // fetch(`${baseUrl}/1`).then( function(res) {
-    //     return res.json();}).then(
-    //         function(climbJSONobj) {
-    //             console.log(climb);
-    //             myClimb = new Climb(climbJSONObj)
-    //             console.log(myClimb);
-    //             climbsContainer.innerHTML += myClimb.htmlTemplate;
-    //         }
-    //     );
-
-    fetch(`${baseUrl}`).then( function(res) {
-        return res.json();}).then(
-            function(climbsArray) {
-                console.log(climbsArray);
-                for ( const climbJSONObj of climbsArray) {
-                    myClimb = new Climb(climbJSONObj)
-                    myClimb.addToClimbSelector ;
-                }
-            }
-        );
-
+    fetchForClimbsSelector();
 
     watchClimbSelection();
 
