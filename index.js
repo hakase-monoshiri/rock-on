@@ -1,26 +1,25 @@
-// Global variables and functions
-
-const climbSelector = document.getElementById("climb-selector");
-
-const sendSelector = document.getElementById("send-selector");
-
-const climbSelectionButton = document.getElementById("climb-selector-submit");
-
+// Base Url to connect to Rails API //
 const baseUrl = "http://127.0.0.1:3000/climbs";
 
+
+// DOM Element Selectors 
+const climbSelector = document.getElementById("climb-selector");
+const sendSelector = document.getElementById("send-selector");
+const climbSelectionButton = document.getElementById("climb-selector-submit");
+
+
 const currentClimbContainer = document.getElementById("current-climb-container");
-
 const currentSendsContainer = document.getElementById("current-send-container");
-
 const sendsFormContainer = document.querySelector(".sends-form-container");
-
 const displaySendFormButton = document.getElementById("show-send-form-button")
 
+// global variables that are used later //
 let newSendForm;
-
 let currentClimbs;
-
 let currentSends;
+
+
+// App-wide/Global Function Definitions //
 
 function fetchForClimbsSelector () {
     fetch(`${baseUrl}`).then( function(res) {
@@ -168,7 +167,7 @@ function submitNewSend (send) {
         body: JSON.stringify({send: sendJSONObj})
       };
       
-    fetch(`${baseUrl}/${climbId}/sends`, configObj)
+   fetch(`${baseUrl}/${climbId}/sends`, configObj)
         .then(function(response) {
           return response.json();
         })
@@ -176,7 +175,7 @@ function submitNewSend (send) {
           console.log(object);
         })
         .catch(function(error) {
-          alert("Bad things! Didn't work");
+          alert("Sorry, that send isn't valid. Try checking you filled in all the info");
           console.log(error.message);
         });
 

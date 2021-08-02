@@ -13,8 +13,9 @@ class SendsController < ApplicationController
 
     def create
         send = Send.new(send_params)
-        send.save
-        render json: send
+        if send.save
+            render json: send
+        end
     end
 
     def destroy
