@@ -183,7 +183,7 @@ function submitNewSend (send) {
     setTimeout( () => fetchSends(climbId), 100);
     setTimeout( () => {
         populateSendSelector(currentSends);
-        displaySend(send);
+        displaySend(currentSends[currentSends.length - 1]);
     }, 200);
 
 }
