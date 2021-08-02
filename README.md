@@ -1,6 +1,6 @@
 # README
 
-# rock-on
+# Rock On
 
 Rock On is a very simple app for tracking indoor climbing "sends".
 
