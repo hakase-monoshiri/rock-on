@@ -15,8 +15,8 @@ const displaySendFormButton = document.getElementById("show-send-form-button")
 
 // global variables that are used later //
 let newSendForm;
-let currentClimbs;
-let currentSends;
+// let currentClimbs;
+// let currentSends;
 
 
 // App-wide/Global Function Definitions //
@@ -60,7 +60,10 @@ function fetchSends(climbId) {
                 return mySend;
                 }
             )}
-        );
+        ).then( (sendsArray) => {
+            populateSendSelector(currentSends);
+            return sendsArray;
+        });
 }
 
 function populateSendSelector (sendList) {
@@ -94,14 +97,14 @@ function watchClimbSelection () {
 
         console.log(event);
 
-        console.log(climbSelector.selectedIndex);
-        let climbId = climbSelector.selectedIndex + 1;
+        console.log(climbSelector.value);
+        let climbId = parseInt(climbSelector.value);
 
         
         fetchSingleClimb(climbId);
         fetchSends(climbId);
 
-        setTimeout(() => populateSendSelector(currentSends), 100);
+        // setTimeout(() => populateSendSelector(currentSends), 100);
         displaySend();
     })
 }
@@ -173,6 +176,13 @@ function submitNewSend (send) {
         })
         .then(function(object) {
           console.log(object);
+          fetchSends(climbId);
+          const send = new Send(object) 
+          return send
+        })
+        .then( (send) => {
+            displaySend(send);
+        
         })
         .catch(function(error) {
           alert("Sorry, that send isn't valid. Try checking you filled in all the info");
@@ -180,11 +190,11 @@ function submitNewSend (send) {
         });
 
     
-    setTimeout( () => fetchSends(climbId), 100);
-    setTimeout( () => {
-        populateSendSelector(currentSends);
-        displaySend(currentSends[currentSends.length - 1]);
-    }, 200);
+    // setTimeout( () => fetchSends(climbId), 100);
+    // setTimeout( () => {
+    //     // populateSendSelector(currentSends);
+    //     displaySend(currentSends[currentSends.length - 1]);
+    // }, 200);
 
 }
 

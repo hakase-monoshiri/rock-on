@@ -34,7 +34,7 @@ class Climb {
     get addToClimbSelector () {
        const climbOption = document.createElement('option');
        climbOption.innerText = `${this. nickname}, ${this.color}: ${this.grade}`;
-       climbOption.value = `climb-${this.id}`
+       climbOption.value = `${this.id}`
        console.log(climbOption)
        climbSelector.appendChild(climbOption);
     }
