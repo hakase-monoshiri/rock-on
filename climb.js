@@ -7,6 +7,7 @@ class Climb {
         this.location = climbJSONObj.location;
         this.notes = climbJSONObj.notes;
         this.color = climbJSONObj.color;
+        this.id = climbJSONObj.id;
     }
     
     get _htmlTemplate() {
@@ -33,6 +34,7 @@ class Climb {
     get addToClimbSelector () {
        const climbOption = document.createElement('option');
        climbOption.innerText = `${this. nickname}, ${this.color}: ${this.grade}`;
+       climbOption.value = `climb-${this.id}`
        console.log(climbOption)
        climbSelector.appendChild(climbOption);
     }
