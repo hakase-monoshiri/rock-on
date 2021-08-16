@@ -49,7 +49,7 @@ class Send {
         sendOption.id = `send-option-${this.id}`;
         console.log(sendOption)
         sendSelector.appendChild(sendOption);
-     }
+    }
  
 
     static newForm() {
